@@ -73,6 +73,26 @@ WSGI_APPLICATION = 'jeu_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# For local usage
+# DATABASES = {
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.sqlite3',
+#     #     'NAME': BASE_DIR / 'db.sqlite3',
+#     # }
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'OPTIONS': {
+#             'options': '-c search_path=entitys'
+#         },
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': '401121',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+
+
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
@@ -83,9 +103,9 @@ DATABASES = {
         'OPTIONS': {
             'options': '-c search_path=entitys'
         },
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '401121',
+        'NAME': 'django_project_db',
+        'USER': 'django',
+        'PASSWORD': 'rape4xadae4E',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
