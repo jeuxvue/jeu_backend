@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +24,10 @@ SECRET_KEY = '#9-t+!%j(-_-qzjjn3=1+auf$@^)+8^ivp2$7e_k5usjpm7sgs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['194.58.108.87', 'localhost', '127.0.0.1']
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '445714106918-br46pg22kgut8dtva9kq3loi890iob5r.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'v-N_wsS3ZSIi87GmcWf7eVfn'
 
 # Application definition
 
@@ -37,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'main',
+    'apigateway',
+    'webpack_loader',
 ]
 
 MIDDLEWARE = [
@@ -74,25 +79,6 @@ WSGI_APPLICATION = 'jeu_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # For local usage
-# DATABASES = {
-#     # 'default': {
-#     #     'ENGINE': 'django.db.backends.sqlite3',
-#     #     'NAME': BASE_DIR / 'db.sqlite3',
-#     # }
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'OPTIONS': {
-#             'options': '-c search_path=entitys'
-#         },
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': '401121',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
-
-
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
@@ -103,13 +89,32 @@ DATABASES = {
         'OPTIONS': {
             'options': '-c search_path=entitys'
         },
-        'NAME': 'django_project_db',
-        'USER': 'django',
-        'PASSWORD': 'rape4xadae4E',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '401121',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
+
+
+# DATABASES = {
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.sqlite3',
+#     #     'NAME': BASE_DIR / 'db.sqlite3',
+#     # }
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'OPTIONS': {
+#             'options': '-c search_path=entitys'
+#         },
+#         'NAME': 'django_project_db',
+#         'USER': 'django',
+#         'PASSWORD': 'rape4xadae4E',
+#         'HOST': '127.0.0.1',
+#         'PORT': '',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -129,6 +134,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+
+LOGIN_REDIRECT_URL = 'api/games/4'
+LOGOUT_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.associate_by_email',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -146,3 +167,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
