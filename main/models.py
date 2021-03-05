@@ -19,13 +19,3 @@ class Games(models.Model):
         verbose_name_plural = 'Games'
         managed = False
         db_table = 'games'
-
-#     CREATE TABLE entitys.games (
-#     id integer NOT NULL,
-#     rawg_id integer,
-#     title text NOT NULL,
-#     description text,
-#     release_date date,
-#     age_rating_id integer,
-#     sys_req text
-# );
