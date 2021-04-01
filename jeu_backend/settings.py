@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'main',
     'apigateway',
     'webpack_loader',
+    'account',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'jeu_backend.urls'
@@ -134,21 +138,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
-LOGIN_URL = '/auth/login/google-oauth2/'
-
-LOGIN_REDIRECT_URL = 'api/games/4'
-LOGOUT_REDIRECT_URL = '/'
-
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-
-SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.associate_by_email',
-)
+# AUTHENTICATION_BACKENDS = (
+#     'social_core.backends.google.GoogleOAuth2',
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+#
+# LOGIN_URL = '/auth/login/google-oauth2/'
+#
+# LOGIN_REDIRECT_URL = 'api/games/4'
+# LOGOUT_REDIRECT_URL = '/'
+#
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+#
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.associate_by_email',
+# )
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -168,3 +172,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3333',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'localhost:3333',
+    'localhost:3333/register'
+]
