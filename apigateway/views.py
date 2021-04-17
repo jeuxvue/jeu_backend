@@ -177,3 +177,16 @@ class GameAdditions(APIView):
             game_additions_data_json_format = json.loads(game_additions_data.content)
 
         return Response(game_additions_data_json_format)
+
+
+class GameDevelopmentTeam(APIView):
+    @staticmethod
+    def get(request, game_id):
+        game_development_team_data = RawgRequests.game_development_team_request(game_id, RAWG_KEY, HEADER_FOR_RAWG)
+
+        if type(game_development_team_data) == str:
+            game_development_team_data_json_format = json.loads(game_development_team_data)
+        else:
+            game_development_team_data_json_format = json.loads(game_development_team_data.content)
+
+        return Response(game_development_team_data_json_format)
