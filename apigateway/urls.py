@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import GameDetails
+from .views import GameDetails, CreatorRoles
 
 
 urlpatterns = [
     # path('games/', GameDetails.as_view(), name="games"),
     path('games/<int:game_id>', GameDetails.as_view()),
+    path('creator-roles/', CreatorRoles.as_view()),
     # path('games/<int:game_id>/additions/', GameDetails.as_view(), name="games/additions"),
     # path('home', views.home, name="home-page"),
     # path('add', views.add, name="add-page"),

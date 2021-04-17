@@ -29,6 +29,10 @@ ALLOWED_HOSTS = ['194.58.108.87', 'localhost', '127.0.0.1']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '445714106918-br46pg22kgut8dtva9kq3loi890iob5r.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'v-N_wsS3ZSIi87GmcWf7eVfn'
 
+RAWG_KEY = 'cb0ae82651a940548b08235b486761d4'
+HEADER_FOR_RAWG = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/ 537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 " \
+         "YaBrowser/ 20.4.2.150 (beta) Yowser/2.5 Safari/537.36 "
+
 # Application definition
 
 INSTALLED_APPS = [
