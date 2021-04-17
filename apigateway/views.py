@@ -77,19 +77,25 @@ class CreatorRoles(APIView):
     def get(request):
         creator_roles_data = RawgRequests.creator_roles_request(RAWG_KEY, HEADER_FOR_RAWG)
 
-        creator_roles_data_json_format = json.loads(creator_roles_data.content)
+        if type(creator_roles_data) == str:
+            creator_roles_data_json_format = json.loads(creator_roles_data.content)
+        else:
+            creator_roles_data_json_format = json.loads(creator_roles_data.content)
 
         return Response(creator_roles_data_json_format)
 
 
-class CreatorList(APIView):
+class CreatorsList(APIView):
     @staticmethod
     def get(request):
-        creator_list_data = RawgRequests.creator_list_request(RAWG_KEY, HEADER_FOR_RAWG)
+        creator_list_data = RawgRequests.creators_list_request(RAWG_KEY, HEADER_FOR_RAWG)
 
-        creator_roles_data_json_format = json.loads(creator_list_data.content)
+        if type(creator_list_data) == str:
+            creators_list_data_json_format = json.loads(creator_list_data.content)
+        else:
+            creators_list_data_json_format = json.loads(creator_list_data.content)
 
-        return Response(creator_roles_data_json_format)
+        return Response(creators_list_data_json_format)
 
 
 class CreatorDetails(APIView):
@@ -97,6 +103,35 @@ class CreatorDetails(APIView):
     def get(request, creator_id):
         creator_data = RawgRequests.creator_request(creator_id, RAWG_KEY, HEADER_FOR_RAWG)
 
-        creator_roles_data_json_format = json.loads(creator_data.content)
+        if type(creator_data) == str:
+            creator_data_json_format = json.loads(creator_data.content)
+        else:
+            creator_data_json_format = json.loads(creator_data.content)
 
-        return Response(creator_roles_data_json_format)
+        return Response(creator_data_json_format)
+
+
+class DevelopersList(APIView):
+    @staticmethod
+    def get(request):
+        developers_list_data = RawgRequests.developers_list_request(RAWG_KEY, HEADER_FOR_RAWG)
+
+        if type(developers_list_data) == str:
+            developers_list_data_json_format = json.loads(developers_list_data)
+        else:
+            developers_list_data_json_format = json.loads(developers_list_data.content)
+
+        return Response(developers_list_data_json_format)
+
+
+class DeveloperDetails(APIView):
+    @staticmethod
+    def get(request, developer_id):
+        developer_data = RawgRequests.developer_request(developer_id, RAWG_KEY, HEADER_FOR_RAWG)
+
+        if type(developer_data) == str:
+            developer_data_json_format = json.loads(developer_data)
+        else:
+            developer_data_json_format = json.loads(developer_data.content)
+
+        return Response(developer_data_json_format)
