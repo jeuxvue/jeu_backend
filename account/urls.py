@@ -9,6 +9,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('redirect-to-register-page', RedirectView.as_view(url='http://localhost:3333/register'), name='redirect-to-register-page'),
     path('successful-registered', RedirectView.as_view(url='http://localhost:3333/games/minecraft'), name='successful-registered'),
+    path('get-csrf-token', views.get_csrf_cookie, name='get-csrf-token'),
     # path('games/<int:game_id>/additions/', GameDetails.as_view(), name="games/additions"),
     # path('home', views.home, name="home-page"),
     # path('add', views.add, name="add-page"),

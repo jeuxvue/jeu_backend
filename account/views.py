@@ -1,6 +1,6 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.contrib import admin
 from main.views import GamesList
 from .models import UserRegistrationForm
@@ -8,7 +8,7 @@ from django.urls import path, reverse
 from rest_framework.response import Response
 
 
-@csrf_exempt
+# @csrf_exempt
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -27,3 +27,7 @@ def register(request):
 
     return redirect('redirect-to-register-page')
 
+
+@ensure_csrf_cookie
+def get_csrf_cookie(request):
+    return HttpResponse(request)
