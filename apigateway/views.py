@@ -1,7 +1,7 @@
 import json
-
 import requests
 
+from apigateway.rawg import RawgRequests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from jeu_backend.settings import RAWG_KEY, HEADER_FOR_RAWG
@@ -29,12 +29,7 @@ class GameDetails(APIView):
             return game_data.status_code
 
     def get(self, request, game_id):
-        # game_additions = self.get_game_addition(game_id, RAWG_KEY, HEADER_FOR_RAWG)
-        game_additions = self.get_game_addition(game_id,
-                                                rawg_key='cb0ae82651a940548b08235b486761d4',
-                                                header="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/"
-                                                       "537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 YaBrowser/"
-                                                       "20.4.2.150 (beta) Yowser/2.5 Safari/537.36")
+        game_additions = self.get_game_addition(game_id, RAWG_KEY, HEADER_FOR_RAWG)
 
         game_additions_data = json.loads(game_additions.content)
 
@@ -68,13 +63,7 @@ class GameDetails(APIView):
 
         game_additions_data_filtered = '{"additions":' + game_additions_data_filtered + "}"
 
-        # game = self.get_game(game_id, RAWG_KEY, HEADER_FOR_RAWG)
-
-        game = self.get_game(game_id,
-                             rawg_key='cb0ae82651a940548b08235b486761d4',
-                             header="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/"
-                                    "537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 YaBrowser/"
-                                    "20.4.2.150 (beta) Yowser/2.5 Safari/537.36")
+        game = self.get_game(game_id, RAWG_KEY, HEADER_FOR_RAWG)
 
         game_data = json.loads(game.content)
 
@@ -84,19 +73,30 @@ class GameDetails(APIView):
 
 
 class CreatorRoles(APIView):
-    def get_creator_roles(self, rawg_key, header):
-        link_to_creator_roles = f"https://api.rawg.io/api/creator-roles?key={rawg_key}"
-
-        creator_roles_data = requests.get(link_to_creator_roles, header)
-
-        if creator_roles_data.status_code == requests.codes.ok:
-            return creator_roles_data
-        else:
-            return creator_roles_data.status_code
-
-    def get(self, request):
-        creator_roles_data = self.get_creator_roles(RAWG_KEY, HEADER_FOR_RAWG)
+    @staticmethod
+    def get(request):
+        creator_roles_data = RawgRequests.creator_roles_request(RAWG_KEY, HEADER_FOR_RAWG)
 
         creator_roles_data_json_format = json.loads(creator_roles_data.content)
+
+        return Response(creator_roles_data_json_format)
+
+
+class CreatorList(APIView):
+    @staticmethod
+    def get(request):
+        creator_list_data = RawgRequests.creator_list_request(RAWG_KEY, HEADER_FOR_RAWG)
+
+        creator_roles_data_json_format = json.loads(creator_list_data.content)
+
+        return Response(creator_roles_data_json_format)
+
+
+class CreatorDetails(APIView):
+    @staticmethod
+    def get(request, creator_id):
+        creator_data = RawgRequests.creator_request(creator_id, RAWG_KEY, HEADER_FOR_RAWG)
+
+        creator_roles_data_json_format = json.loads(creator_data.content)
 
         return Response(creator_roles_data_json_format)
