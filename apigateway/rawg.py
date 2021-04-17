@@ -108,3 +108,17 @@ class RawgRequests:
                 return '{"detail":"Not found."}'
             else:
                 return game_data.status_code
+
+    @staticmethod
+    def game_additions_request(game_id, rawg_key, header):
+        link_to_game_additions = f"https://api.rawg.io/api/games/{game_id}/additions?key={rawg_key}"
+
+        game_additions_data = requests.get(link_to_game_additions, header)
+
+        if game_additions_data.status_code == requests.codes.ok:
+            return game_additions_data
+        else:
+            if game_additions_data.status_code == requests.codes.not_found:
+                return '{"detail":"Not found."}'
+            else:
+                return game_additions_data.status_code
