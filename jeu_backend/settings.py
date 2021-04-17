@@ -171,17 +171,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+#     'PAGE_SIZE': 100
+# }
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3333',
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    'localhost:3333',
-    'localhost:3333/register'
-]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+#
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3333',
+# ]
+#
+# CSRF_TRUSTED_ORIGINS = [
+#     'localhost:3333',
+#     'localhost:3333/register'
+# ]

@@ -17,8 +17,11 @@ class RawgRequests:
                 return creator_roles_data.status_code
 
     @staticmethod
-    def creators_list_request(rawg_key, header):
-        link_to_creators_list = f"https://api.rawg.io/api/creators?key={rawg_key}"
+    def creators_list_request(rawg_key, header, page_number):
+        if page_number is None:
+            link_to_creators_list = f"https://api.rawg.io/api/creators?key={rawg_key}"
+        else:
+            link_to_creators_list = f"https://api.rawg.io/api/creators?key={rawg_key}&page={page_number}"
 
         creators_list_data = requests.get(link_to_creators_list, header)
 
@@ -45,8 +48,11 @@ class RawgRequests:
                 return creator_data.status_code
 
     @staticmethod
-    def developers_list_request(rawg_key, header):
-        link_to_developers_list = f"https://api.rawg.io/api/developers?key={rawg_key}"
+    def developers_list_request(rawg_key, header, page_number):
+        if page_number is None:
+            link_to_developers_list = f"https://api.rawg.io/api/developers?key={rawg_key}"
+        else:
+            link_to_developers_list = f"https://api.rawg.io/api/developers?key={rawg_key}&page={page_number}"
 
         developers_list_data = requests.get(link_to_developers_list, header)
 
@@ -54,7 +60,7 @@ class RawgRequests:
             return developers_list_data
         else:
             if developers_list_data.status_code == requests.codes.not_found:
-                return '{"detail":"Not found."}'
+                return '{"detail":"Page not found."}'
             else:
                 return developers_list_data.status_code
 
@@ -71,3 +77,34 @@ class RawgRequests:
                 return '{"detail":"Not found."}'
             else:
                 return developer_data.status_code
+
+    @staticmethod
+    def games_list_request(rawg_key, header, page_number):
+        if page_number is None:
+            link_to_games_list = f"https://api.rawg.io/api/games?key={rawg_key}"
+        else:
+            link_to_games_list = f"https://api.rawg.io/api/games?key={rawg_key}&page={page_number}"
+
+        games_list_data = requests.get(link_to_games_list, header)
+
+        if games_list_data.status_code == requests.codes.ok:
+            return games_list_data
+        else:
+            if games_list_data.status_code == requests.codes.not_found:
+                return '{"detail":"Page not found."}'
+            else:
+                return games_list_data.status_code
+
+    @staticmethod
+    def game_request(game_id, rawg_key, header):
+        link_to_game = f"https://api.rawg.io/api/games/{game_id}?key={rawg_key}"
+
+        game_data = requests.get(link_to_game, header)
+
+        if game_data.status_code == requests.codes.ok:
+            return game_data
+        else:
+            if game_data.status_code == requests.codes.not_found:
+                return '{"detail":"Not found."}'
+            else:
+                return game_data.status_code

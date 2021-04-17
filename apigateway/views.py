@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from jeu_backend.settings import RAWG_KEY, HEADER_FOR_RAWG
 
 
-class GameDetails(APIView):
+class GameDetailss(APIView):
     def get_game(self, game_id, rawg_key, header):
         link_to_game = f"https://api.rawg.io/api/games/{game_id}?key={rawg_key}"
 
@@ -88,7 +88,8 @@ class CreatorRoles(APIView):
 class CreatorsList(APIView):
     @staticmethod
     def get(request):
-        creator_list_data = RawgRequests.creators_list_request(RAWG_KEY, HEADER_FOR_RAWG)
+        page_number = request.GET.get("page")
+        creator_list_data = RawgRequests.creators_list_request(RAWG_KEY, HEADER_FOR_RAWG, page_number)
 
         if type(creator_list_data) == str:
             creators_list_data_json_format = json.loads(creator_list_data.content)
@@ -114,7 +115,8 @@ class CreatorDetails(APIView):
 class DevelopersList(APIView):
     @staticmethod
     def get(request):
-        developers_list_data = RawgRequests.developers_list_request(RAWG_KEY, HEADER_FOR_RAWG)
+        page_number = request.GET.get("page")
+        developers_list_data = RawgRequests.developers_list_request(RAWG_KEY, HEADER_FOR_RAWG, page_number)
 
         if type(developers_list_data) == str:
             developers_list_data_json_format = json.loads(developers_list_data)
@@ -133,5 +135,32 @@ class DeveloperDetails(APIView):
             developer_data_json_format = json.loads(developer_data)
         else:
             developer_data_json_format = json.loads(developer_data.content)
+
+        return Response(developer_data_json_format)
+
+
+class GamesList(APIView):
+    @staticmethod
+    def get(request):
+        page_number = request.GET.get("page")
+        games_list_data = RawgRequests.games_list_request(RAWG_KEY, HEADER_FOR_RAWG, page_number)
+
+        if type(games_list_data) == str:
+            games_list_data_json_format = json.loads(games_list_data)
+        else:
+            games_list_data_json_format = json.loads(games_list_data.content)
+
+        return Response(games_list_data_json_format)
+
+
+class GameDetails(APIView):
+    @staticmethod
+    def get(request, game_id):
+        game_data = RawgRequests.game_request(game_id, RAWG_KEY, HEADER_FOR_RAWG)
+
+        if type(game_data) == str:
+            developer_data_json_format = json.loads(game_data)
+        else:
+            developer_data_json_format = json.loads(game_data.content)
 
         return Response(developer_data_json_format)
